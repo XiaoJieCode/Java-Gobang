@@ -1,5 +1,9 @@
-# include <stdio.h>
+﻿#include <stdio.h>
+
 int main()
 {
-    printf("1");
+    char* commend = "java starter.GameStart";
+    system(commend);
+    char* commend_pause = "pause";
+    system(commend_pause);
 }
