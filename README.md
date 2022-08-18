@@ -7,4 +7,5 @@ Escape, Backspace键悔棋<br>
     
     git pull https://github.com/XiaoJieCode/Java-Gobang
 <br>
-或者点击右边Releases下载压缩包
+或者点击右边Releases下载压缩包<br>
+***需要Java8及以上版本***
