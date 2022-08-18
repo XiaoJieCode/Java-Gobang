@@ -1,8 +1,10 @@
 package Objects;
 
-import java.awt.*;
 import Data.Data;
 import Util.Util;
+
+import java.awt.*;
+
 public class PlayerBlack extends Player {
     int[][] chessPositionArray;
 

@@ -13,7 +13,7 @@ public class Util {
             Color color = chess1.getColor();
             if (color.equals(Color.black)) {
                 chessPositionArray[chess1.row][chess1.column] = 1;
-            }else if (color.equals(Color.white)){
+            } else if (color.equals(Color.white)) {
                 chessPositionArray[chess1.row][chess1.column] = -1;
             }
         }

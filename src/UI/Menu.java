@@ -8,9 +8,9 @@ import java.awt.*;
 
 
 public class Menu extends Panel {
-    Judge actionListener;
     public JRadioButton button5;
     public JRadioButton button6;
+    Judge actionListener;
 
     public Menu(JFrame frame) {
         actionListener = new Judge(this);

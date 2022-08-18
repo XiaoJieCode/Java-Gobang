@@ -1,8 +1,8 @@
 package Modular;
 
 import Data.Data;
-
 import Util.Util;
+
 import java.awt.*;
 
 public class Indicator {
@@ -38,8 +38,8 @@ public class Indicator {
             if (Data.lastChessPositionAIX == -1 && Data.lastChessPositionAIY == -1) {
                 return;
             }
-            int x = Data.lastChessPositionAIX;
-            int y = Data.lastChessPositionAIY;
+            int x;
+            int y;
             x = Data.chessArray.get(Data.chessArray.size() - 1).row;
             y = Data.chessArray.get(Data.chessArray.size() - 1).column;
 

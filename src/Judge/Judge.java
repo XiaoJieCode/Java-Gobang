@@ -103,6 +103,7 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
                 }
                 break;
             case KeyEvent.VK_ESCAPE:
+            case KeyEvent.VK_BACK_SPACE:
                 if (Data.pattern == 0) {
                     if (Data.gameState == 0) {
                         playerBlack.repentanceChess();
@@ -116,9 +117,9 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
                 }
                 break;
             case KeyEvent.VK_F2:
-                if (Data.ifShowWeightChess == 0){
+                if (Data.ifShowWeightChess == 0) {
                     Data.ifShowWeightChess = 1;
-                }else {
+                } else {
                     Data.ifShowWeightChess = 0;
                 }
         }

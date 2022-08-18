@@ -1,8 +1,9 @@
 package Objects;
 
-import java.awt.*;
 import Data.Data;
 import Util.Util;
+
+import java.awt.*;
 
 public class PlayerComputer extends Player {
     public int row = 0;

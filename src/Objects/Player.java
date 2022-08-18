@@ -1,9 +1,10 @@
 package Objects;
 
-import javax.swing.*;
-import java.awt.*;
 import Data.Data;
 import Util.Util;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class Player {
     public String name;
