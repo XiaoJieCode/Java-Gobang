@@ -1,12 +1,14 @@
-import java.awt.*;
-import java.util.HashMap;
+package Objects;
 
+import java.awt.*;
+import Data.Data;
+import Util.Util;
 
 public class PlayerComputer extends Player {
     public int row = 0;
     public int column = 0;
+    public int[][] chessPositionArray = new int[15][15];
     int[][] weightArray = new int[15][15];
-    int[][] chessPositionArray = new int[15][15];
     int max;
 
     public PlayerComputer() {
@@ -296,7 +298,7 @@ public class PlayerComputer extends Player {
     @Override
     public void ifWin() {
         // 游戏结束不判断
-        if (Data.gameEnd==0) {
+        if (Data.gameEnd == 0) {
             // 当棋子总数大于等于9时才判断
             if (Data.chessArray.size() >= 1) {
                 // 初始化变量

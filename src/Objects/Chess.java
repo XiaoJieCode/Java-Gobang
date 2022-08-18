@@ -1,10 +1,12 @@
+package Objects;
+
 import java.awt.*;
 import java.io.Serializable;
 
 public class Chess implements Serializable {
 
-    int row;
-    int column;
+    public int row;
+    public int column;
     Color color;
 
     public Chess(int row, int column, Color color) {
@@ -23,12 +25,8 @@ public class Chess implements Serializable {
         return "[" + row + "," + column + "," + color + "]";
     }
 
-    public int getColor() {
+    public Color getColor() {
 
-        if (color.equals(Color.black)) {
-            return 1;
-        } else {
-            return -1;
-        }
+        return this.color;
     }
 }

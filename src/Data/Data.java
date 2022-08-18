@@ -1,3 +1,10 @@
+package Data;
+
+import Modular.SaverAndLoader;
+import Objects.Chess;
+import Objects.PlayerComputer;
+import UI.Menu;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,9 +17,9 @@ public class Data {
     // 当前哪方下棋, 0为黑方  1 为白方  2为电脑
     public static int gameState = 0;
 
-    // 是否显示权值分数  0 不显示， 1 显示【、
+    // 是否显示权值分数  0 不显示， 1 显示
 
-    public static int ifShowWeightChess = 1;
+    public static int ifShowWeightChess = 0;
 
     // 权值分数列表
     public static int[][] weightArray = new int[15][15];

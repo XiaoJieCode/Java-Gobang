@@ -1,13 +1,19 @@
+package UI;
+
+import Data.Data;
+import Judge.Judge;
+
 import javax.swing.*;
 import java.awt.*;
 
+
 public class Menu extends Panel {
-    ActionListener actionListener;
-    JRadioButton button5;
-    JRadioButton button6;
+    Judge actionListener;
+    public JRadioButton button5;
+    public JRadioButton button6;
 
     public Menu(JFrame frame) {
-        actionListener = new ActionListener(this);
+        actionListener = new Judge(this);
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(150, 0));
         addButtons();

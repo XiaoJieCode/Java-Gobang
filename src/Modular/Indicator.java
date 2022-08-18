@@ -1,5 +1,9 @@
+package Modular;
+
+import Data.Data;
+
+import Util.Util;
 import java.awt.*;
-import java.util.Arrays;
 
 public class Indicator {
     public static void drawIndicator(Graphics g) {
@@ -30,19 +34,19 @@ public class Indicator {
     }
 
     public static void drawIndicatorAI(Graphics g) {
-        if (Data.pattern == 1 && Data.chessArray.size()>1) {
+        if (Data.pattern == 1 && Data.chessArray.size() > 1) {
             if (Data.lastChessPositionAIX == -1 && Data.lastChessPositionAIY == -1) {
                 return;
             }
             int x = Data.lastChessPositionAIX;
             int y = Data.lastChessPositionAIY;
-            x = Data.chessArray.get(Data.chessArray.size()-1).row;
-            y = Data.chessArray.get(Data.chessArray.size()-1).column;
+            x = Data.chessArray.get(Data.chessArray.size() - 1).row;
+            y = Data.chessArray.get(Data.chessArray.size() - 1).column;
 
             x = x * 40 - 24;
             y = y * 40 - 24;
             g.setColor(Color.red);
-            g.fillArc(x+40, y+40, 8, 8, 0, 360);
+            g.fillArc(x + 40, y + 40, 8, 8, 0, 360);
 
         }
     }

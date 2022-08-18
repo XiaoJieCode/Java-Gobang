@@ -1,21 +1,28 @@
+package Judge;
+
+import Data.Data;
+import Objects.PlayerBlack;
+import Objects.PlayerComputer;
+import Objects.PlayerWhite;
+import Util.Util;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 
-public class ActionListener extends KeyAdapter implements java.awt.event.ActionListener, MouseMotionListener, MouseListener, WindowListener {
+public class Judge extends KeyAdapter implements java.awt.event.ActionListener, MouseMotionListener, MouseListener, WindowListener {
     PlayerBlack playerBlack;
     PlayerWhite playerWhite;
     PlayerComputer playerComputer;
     Panel panel;
 
-    public ActionListener(Panel panel) {
+    public Judge(Panel panel) {
         this.panel = panel;
         this.playerBlack = new PlayerBlack();
         this.playerWhite = new PlayerWhite();
         this.playerComputer = new PlayerComputer();
-        Data.playerComputer =this.playerComputer;
+        Data.playerComputer = this.playerComputer;
     }
 
     @Override
@@ -25,13 +32,13 @@ public class ActionListener extends KeyAdapter implements java.awt.event.ActionL
 
         } else if (e.getActionCommand().equals(Data.messageArray[1])) {
 
-            if (Data.pattern==0) {
+            if (Data.pattern == 0) {
                 if (Data.gameState == 0) {
                     playerBlack.repentanceChess();
                 } else if (Data.gameState == 1) {
                     playerWhite.repentanceChess();
                 }
-            } else if (Data.pattern==1) {
+            } else if (Data.pattern == 1) {
                 playerComputer.repentanceChess();
                 playerBlack.repentanceChess();
                 playerComputer.chessPositionArray = Util.getChessPositionArray(Data.chessArray);
@@ -39,9 +46,9 @@ public class ActionListener extends KeyAdapter implements java.awt.event.ActionL
             Data.gameEnd = 0;
         } else if (e.getActionCommand().equals(Data.messageArray[2])) {
             if (Data.pattern == 0) {
-                if (Data.gameState==0) {
+                if (Data.gameState == 0) {
                     playerWhite.surrender();
-                }else{
+                } else {
                     playerBlack.surrender();
                 }
             } else if (Data.pattern == 1) {
@@ -62,40 +69,58 @@ public class ActionListener extends KeyAdapter implements java.awt.event.ActionL
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key==KeyEvent.VK_W || key == KeyEvent.VK_UP){
-            Data.mousePointer.y=Data.mousePointer.y-40;
-        } else if (key==KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {
-            Data.mousePointer.x=Data.mousePointer.x-40;
-        }else if (key==KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
-            Data.mousePointer.y=Data.mousePointer.y+40;
-        }else if (key==KeyEvent.VK_D || key == KeyEvent.VK_RIGHT) {
-            Data.mousePointer.x=Data.mousePointer.x+40;
-        }else if (key==KeyEvent.VK_SPACE || key == KeyEvent.VK_ENTER) {
-            if (Data.pattern == 0) {
-                if (Data.gameState == 0) {
-                    playerBlack.writeChess();
-                } else if (Data.gameState == 1) {
-                    playerWhite.writeChess();
-                }
+        switch (key) {
+            case KeyEvent.VK_W:
+            case KeyEvent.VK_UP:
+                Data.mousePointer.y = Data.mousePointer.y - 40;
+                break;
+            case KeyEvent.VK_A:
+            case KeyEvent.VK_LEFT:
+                Data.mousePointer.x = Data.mousePointer.x - 40;
+                break;
+            case KeyEvent.VK_S:
+            case KeyEvent.VK_DOWN:
+                Data.mousePointer.y = Data.mousePointer.y + 40;
+                break;
+            case KeyEvent.VK_D:
+            case KeyEvent.VK_RIGHT:
+                Data.mousePointer.x = Data.mousePointer.x + 40;
+                break;
+            case KeyEvent.VK_SPACE:
+            case KeyEvent.VK_ENTER:
+                if (Data.pattern == 0) {
+                    if (Data.gameState == 0) {
+                        playerBlack.writeChess();
+                    } else if (Data.gameState == 1) {
+                        playerWhite.writeChess();
+                    }
 
-            } else if (Data.pattern == 1) {
-                playerBlack.writeChess();
-                if (Data.gameState == 2 && Data.gameEnd!=1) {
-                    playerComputer.writeChess();
+                } else if (Data.pattern == 1) {
+                    playerBlack.writeChess();
+                    if (Data.gameState == 2 && Data.gameEnd != 1) {
+                        playerComputer.writeChess();
+                    }
                 }
-            }
-        }else if (key==KeyEvent.VK_ESCAPE) {
-            if (Data.pattern==0) {
-                if (Data.gameState == 0) {
+                break;
+            case KeyEvent.VK_ESCAPE:
+                if (Data.pattern == 0) {
+                    if (Data.gameState == 0) {
+                        playerBlack.repentanceChess();
+                    } else if (Data.gameState == 1) {
+                        playerWhite.repentanceChess();
+                    }
+                } else if (Data.pattern == 1) {
+                    playerComputer.repentanceChess();
                     playerBlack.repentanceChess();
-                } else if (Data.gameState == 1) {
-                    playerWhite.repentanceChess();
+                    playerComputer.chessPositionArray = Util.getChessPositionArray(Data.chessArray);
                 }
-            } else if (Data.pattern==1) {
-                playerComputer.repentanceChess();
-                playerBlack.repentanceChess();
-                playerComputer.chessPositionArray = Util.getChessPositionArray(Data.chessArray);
-            }
+                break;
+            case KeyEvent.VK_F2:
+                if (Data.ifShowWeightChess == 0){
+                    Data.ifShowWeightChess = 1;
+                }else {
+                    Data.ifShowWeightChess = 0;
+                }
         }
     }
 
@@ -123,7 +148,7 @@ public class ActionListener extends KeyAdapter implements java.awt.event.ActionL
 
         } else if (Data.pattern == 1) {
             playerBlack.writeChess();
-            if (Data.gameState == 2 && Data.gameEnd!=1) {
+            if (Data.gameState == 2 && Data.gameEnd != 1) {
                 playerComputer.writeChess();
             }
         }
@@ -151,7 +176,7 @@ public class ActionListener extends KeyAdapter implements java.awt.event.ActionL
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        if (!Data.mousePointer.equals(new Point(e.getX() - 7, e.getY() - 30))){
+        if (!Data.mousePointer.equals(new Point(e.getX() - 7, e.getY() - 30))) {
             Data.mousePointer = new Point(e.getX() - 7, e.getY() - 30);
         }
     }
@@ -160,7 +185,7 @@ public class ActionListener extends KeyAdapter implements java.awt.event.ActionL
     public void windowOpened(WindowEvent e) {
 
         JFrame frame = Data.frame;
-        if (Data.ifFirstGame==0) {
+        if (Data.ifFirstGame == 0) {
             Data.gameEnd = 1;
             JDialog jDialog = new JDialog(frame, "是否加载存档？");
             JButton jButton1 = new JButton("开始新游戏");
@@ -178,7 +203,7 @@ public class ActionListener extends KeyAdapter implements java.awt.event.ActionL
             jDialog.setLocationRelativeTo(null);
             jDialog.setVisible(true);
 
-            jButton1.addActionListener(new ActionListener(panel) {
+            jButton1.addActionListener(new Judge(panel) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (e.getActionCommand().equals("开始新游戏")) {
@@ -188,7 +213,7 @@ public class ActionListener extends KeyAdapter implements java.awt.event.ActionL
                     }
                 }
             });
-            jButton2.addActionListener(new ActionListener(panel) {
+            jButton2.addActionListener(new Judge(panel) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (e.getActionCommand().equals("加载上局存档")) {
@@ -199,7 +224,7 @@ public class ActionListener extends KeyAdapter implements java.awt.event.ActionL
                     }
                 }
             });
-            jButton3.addActionListener(new ActionListener(panel) {
+            jButton3.addActionListener(new Judge(panel) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (e.getActionCommand().equals("加载指定存档")) {
@@ -216,53 +241,52 @@ public class ActionListener extends KeyAdapter implements java.awt.event.ActionL
 
     @Override
     public void windowClosing(WindowEvent e) {
-        if (Data.chessArray.size()==0 || Data.gameEnd==1){
+        if (Data.chessArray.size() == 0 || Data.gameEnd == 1) {
             System.exit(1);
         }
-            JFrame frame = Data.frame;
-            JDialog jDialog = new JDialog(frame, "是否保存存档？");
+        JFrame frame = Data.frame;
+        JDialog jDialog = new JDialog(frame, "是否保存存档？");
 
-            JButton jButton1 = new JButton("另存为");
-            JButton jButton2 = new JButton("保存并退出");
-            JButton jButton3 = new JButton("退出");
+        JButton jButton1 = new JButton("另存为");
+        JButton jButton2 = new JButton("保存并退出");
+        JButton jButton3 = new JButton("退出");
 
-            jDialog.add(jButton1);
-            jDialog.add(jButton2);
-            jDialog.add(jButton3);
+        jDialog.add(jButton1);
+        jDialog.add(jButton2);
+        jDialog.add(jButton3);
 
-            jDialog.setSize(300, 80);
-            jDialog.setLayout(new FlowLayout());
-            jDialog.setLocationRelativeTo(null);
-            jDialog.setVisible(true);
-            jButton1.addActionListener(new ActionListener(panel) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (e.getActionCommand().equals("另存为")) {
-                        Data.saverAndLoader.saveFileOtherPath();
-                        System.exit(1);
-                    }
+        jDialog.setSize(300, 80);
+        jDialog.setLayout(new FlowLayout());
+        jDialog.setLocationRelativeTo(null);
+        jDialog.setVisible(true);
+        jButton1.addActionListener(new Judge(panel) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getActionCommand().equals("另存为")) {
+                    Data.saverAndLoader.saveFileOtherPath();
+                    System.exit(1);
                 }
-            });
-            jButton2.addActionListener(new ActionListener(panel) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (e.getActionCommand().equals("保存并退出")) {
-                        Data.saverAndLoader.saveFileDefaultPath();
-                        System.exit(1);
-                    }
+            }
+        });
+        jButton2.addActionListener(new Judge(panel) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getActionCommand().equals("保存并退出")) {
+                    Data.saverAndLoader.saveFileDefaultPath();
+                    System.exit(1);
                 }
-            });
+            }
+        });
 
-            jButton3.addActionListener(new ActionListener(panel) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (e.getActionCommand().equals("退出")) {
-                        System.exit(1);
-                    }
+        jButton3.addActionListener(new Judge(panel) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getActionCommand().equals("退出")) {
+                    System.exit(1);
                 }
-            });
-        }
-
+            }
+        });
+    }
 
 
     @Override

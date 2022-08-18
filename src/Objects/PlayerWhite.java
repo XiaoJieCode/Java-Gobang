@@ -1,5 +1,8 @@
-import java.awt.*;
+package Objects;
 
+import java.awt.*;
+import Data.Data;
+import Util.Util;
 public class PlayerWhite extends Player {
     int[][] chessPositionArray = new int[15][15];
 
@@ -22,7 +25,7 @@ public class PlayerWhite extends Player {
 
     @Override
     public void writeChess() {
-        if (Data.gameEnd==0) {
+        if (Data.gameEnd == 0) {
             // 当前鼠标坐标
             int x = Data.mousePointer.x;
             int y = Data.mousePointer.y;
@@ -52,7 +55,7 @@ public class PlayerWhite extends Player {
     @Override
     public void ifWin() {
         // 游戏结束不判断
-        if (Data.gameEnd==0) {
+        if (Data.gameEnd == 0) {
             // 当棋子总数大于等于9时才判断
             if (Data.chessArray.size() >= 1) {
                 // 初始化变量

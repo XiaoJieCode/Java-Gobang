@@ -1,3 +1,8 @@
+package Util;
+
+import Data.Data;
+import Objects.Chess;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -5,7 +10,12 @@ public class Util {
     public static int[][] getChessPositionArray(ArrayList<Chess> chess) {
         int[][] chessPositionArray = new int[15][15];
         for (Chess chess1 : chess) {
-            chessPositionArray[chess1.row][chess1.column] = chess1.getColor();
+            Color color = chess1.getColor();
+            if (color.equals(Color.black)) {
+                chessPositionArray[chess1.row][chess1.column] = 1;
+            }else if (color.equals(Color.white)){
+                chessPositionArray[chess1.row][chess1.column] = -1;
+            }
         }
         return chessPositionArray;
     }

@@ -1,3 +1,10 @@
+package UI;
+
+import Data.Data;
+import Modular.Indicator;
+import Modular.SaverAndLoader;
+import Objects.Chess;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,12 +13,13 @@ import java.awt.event.ActionListener;
 
 public class UI extends JPanel implements ActionListener {
     JFrame frame;
+
     public UI() {
         initScreen();
         initMenu();
         Data.saverAndLoader = new SaverAndLoader();
         Data.saverAndLoader.loadConfig();
-        Timer timer = new Timer(1/120, this);
+        Timer timer = new Timer(1 / 120, this);
         timer.start();
     }
 
@@ -69,7 +77,7 @@ public class UI extends JPanel implements ActionListener {
     public void drawChess(Graphics g) {
         for (Chess chess : Data.chessArray) {
 
-            g.setColor(chess.color);
+            g.setColor(chess.getColor());
             int row = chess.row;
             int column = chess.column;
             g.fillOval(row * 40, column * 40, 40, 40);
@@ -81,6 +89,7 @@ public class UI extends JPanel implements ActionListener {
     public void drawIndicator(Graphics g) {
         Indicator.drawIndicator(g);
     }
+
     public void drawWeightChessGrade(Graphics g) {
         if (Data.ifShowWeightChess == 1) {
             int[][] weightArray = new int[15][15];
@@ -106,6 +115,7 @@ public class UI extends JPanel implements ActionListener {
             }
         }
     }
+
     // ×Ô¶¯Ë¢ÐÂÆåÅÌ
     @Override
     public void actionPerformed(ActionEvent e) {
