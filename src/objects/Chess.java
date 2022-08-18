@@ -1,4 +1,4 @@
-package Objects;
+package objects;
 
 import java.awt.*;
 import java.io.Serializable;

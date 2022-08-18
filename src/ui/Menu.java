@@ -1,13 +1,15 @@
-package UI;
+package ui;
 
-import Data.Data;
-import Judge.Judge;
+import data.Data;
+import judge.Judge;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
-public class Menu extends Panel {
+public class Menu extends JPanel {
     public JRadioButton button5;
     public JRadioButton button6;
     Judge actionListener;
@@ -121,4 +123,5 @@ public class Menu extends Panel {
         button6.addActionListener(actionListener);
 
     }
+
 }

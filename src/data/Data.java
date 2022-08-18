@@ -1,9 +1,9 @@
-package Data;
+package data;
 
-import Modular.SaverAndLoader;
-import Objects.Chess;
-import Objects.PlayerComputer;
-import UI.Menu;
+import modular.SaverAndLoader;
+import objects.Chess;
+import objects.PlayerComputer;
+import ui.Menu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +35,7 @@ public class Data {
     public static SaverAndLoader saverAndLoader;
     // 操作模式 0 为鼠标操作   1为键盘操作
     public static Point mousePointer = new Point(300, 300);
-    public static Panel panel;
+    public static JPanel panel;
     public static Menu menu;
     public static JFrame frame;
 

@@ -1,7 +1,7 @@
-package Starter;
+package starter;
 
 public class GameStart {
     public static void main(String[] args) {
-        new UI.UI();
+        new ui.UI();
     }
 }

@@ -1,7 +1,7 @@
-package Modular;
+package modular;
 
-import Data.Data;
-import Objects.Chess;
+import data.Data;
+import objects.Chess;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -17,7 +17,7 @@ public class SaverAndLoader {
 
     public void loadConfig() {
         try {
-            File config = new File("config.ini");
+            File config = new File("config.obj");
             if (!config.exists()) {
                 Data.ifFirstGame = 1;
                 saveConfig();
@@ -44,7 +44,7 @@ public class SaverAndLoader {
 
     public void saveConfig() {
         try {
-            File config = new File("config.ini");
+            File config = new File("config.obj");
             HashMap<Object, Object> file = new HashMap<>();
             file.put("pattern", Data.pattern);
             if (!config.exists()) {

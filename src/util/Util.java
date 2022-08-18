@@ -1,7 +1,7 @@
-package Util;
+package util;
 
-import Data.Data;
-import Objects.Chess;
+import data.Data;
+import objects.Chess;
 
 import java.awt.*;
 import java.util.ArrayList;

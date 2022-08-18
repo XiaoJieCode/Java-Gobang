@@ -1,9 +1,9 @@
-package UI;
+package ui;
 
-import Data.Data;
-import Modular.Indicator;
-import Modular.SaverAndLoader;
-import Objects.Chess;
+import data.Data;
+import modular.Indicator;
+import modular.SaverAndLoader;
+import objects.Chess;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,16 +15,18 @@ public class UI extends JPanel implements ActionListener {
     JFrame frame;
 
     public UI() {
+
         initScreen();
         initMenu();
         Data.saverAndLoader = new SaverAndLoader();
         Data.saverAndLoader.loadConfig();
         Timer timer = new Timer(1 / 120, this);
         timer.start();
+        frame.setVisible(true);
     }
 
     // 初始化各种参数
-    public void initScreen() {
+    public synchronized void initScreen() {
         frame = new JFrame("五子棋");
         frame.setSize(780, 635);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -33,13 +35,10 @@ public class UI extends JPanel implements ActionListener {
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
         frame.add(this, BorderLayout.CENTER);
-        frame.setVisible(true);
-
-
         Data.frame = frame;
     }
 
-    public void initMenu() {
+    public synchronized void initMenu() {
         Data.menu = new Menu(frame);
     }
 

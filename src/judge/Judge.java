@@ -1,10 +1,10 @@
-package Judge;
+package judge;
 
-import Data.Data;
-import Objects.PlayerBlack;
-import Objects.PlayerComputer;
-import Objects.PlayerWhite;
-import Util.Util;
+import data.Data;
+import objects.PlayerBlack;
+import objects.PlayerComputer;
+import objects.PlayerWhite;
+import util.Util;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,9 +15,9 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
     PlayerBlack playerBlack;
     PlayerWhite playerWhite;
     PlayerComputer playerComputer;
-    Panel panel;
+    JPanel panel;
 
-    public Judge(Panel panel) {
+    public Judge(JPanel panel) {
         this.panel = panel;
         this.playerBlack = new PlayerBlack();
         this.playerWhite = new PlayerWhite();

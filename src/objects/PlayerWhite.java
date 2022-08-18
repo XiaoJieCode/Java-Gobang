@@ -1,7 +1,7 @@
-package Objects;
+package objects;
 
-import Data.Data;
-import Util.Util;
+import data.Data;
+import util.Util;
 
 import java.awt.*;
 
