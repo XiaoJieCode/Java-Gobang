@@ -24,9 +24,9 @@ Escape, Backspace键悔棋<br>
 
 Click the mouse to play chess or press the W, a, s, D, ↑, ↓, ←, → direction keys on the keyboard, and press enter to play chess<br>
 
-Escape, backspace <br>
+Escape, backspace<br>
 
-***Tip: press F2 to open the man-machine weight display *** <br>
+***Tip: press F2 to open the man-machine weight display*** <br>
 
 ## Usage:
 
