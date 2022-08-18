@@ -15,7 +15,11 @@ public class UI extends JPanel implements ActionListener {
     JFrame frame;
 
     public UI() {
-
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initScreen();
         initMenu();
         Data.saverAndLoader = new SaverAndLoader();
@@ -35,6 +39,7 @@ public class UI extends JPanel implements ActionListener {
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
         frame.add(this, BorderLayout.CENTER);
+
         Data.frame = frame;
     }
 

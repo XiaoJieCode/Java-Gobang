@@ -193,12 +193,16 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
             JButton jButton2 = new JButton("加载上局存档");
             JButton jButton3 = new JButton("加载指定存档");
 
+            jButton1.setFocusable(false);
+            jButton2.setFocusable(false);
+            jButton3.setFocusable(false);
+
             jDialog.add(jButton1);
             jDialog.add(jButton2);
             jDialog.add(jButton3);
 
 
-            jDialog.setSize(400, 75);
+            jDialog.setSize(400, 85);
             jDialog.setAlwaysOnTop(true);
             jDialog.setLayout(new FlowLayout());
             jDialog.setLocationRelativeTo(null);
