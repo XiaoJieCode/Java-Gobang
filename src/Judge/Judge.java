@@ -27,9 +27,9 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if (e.getActionCommand().equals(Data.messageArray[0])) {
             Util.newGame();
-
         } else if (e.getActionCommand().equals(Data.messageArray[1])) {
 
             if (Data.pattern == 0) {
