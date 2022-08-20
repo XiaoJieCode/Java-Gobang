@@ -100,7 +100,7 @@ public class SaverAndLoader {
         file = jFileChooser.getSelectedFile();
         if (!file.exists()) {
             try {
-                file.createNewFile();
+                if (!file.createNewFile()) throw new IOException();
             } catch (IOException e) {
                 System.out.println("创建文件失败");
             }
