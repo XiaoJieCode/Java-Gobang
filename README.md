@@ -15,7 +15,7 @@ Escape, Backspace键悔棋<br>
 或者点击右边Releases下载压缩包,解压后点击开始游戏游玩
 <br>
 
-***需要计算机安装Java8及以上版本&&添加环境变量（path）***
+***需要计算机安装Java/JDK 11及以上版本&&添加环境变量（path）***
 
 # English
 # Gobang with man-machine combat, written in pure Java
@@ -40,4 +40,4 @@ Or click releases on the right to download the compressed package, and then clic
 
 
 
-***You need to install Java 8 and above on your computer && add environment variable (path)***
+***You need to install Java 11 and above on your computer && add environment variable (path)***
