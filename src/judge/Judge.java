@@ -264,6 +264,8 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
         if (!Config.ifFirstGame) {
             Game.ifGameEnd = true;
             jDialog = new JDialog(frame, "是否加载存档？");
+            jDialog.setResizable(false);
+            jDialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
             JButton jButton1 = new JButton("开始新游戏");
             JButton jButton2 = new JButton("加载上局存档");
@@ -287,6 +289,7 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
             jButton1.addActionListener(judge);
             jButton2.addActionListener(judge);
             jButton3.addActionListener(judge);
+
         }
     }
 
@@ -308,6 +311,7 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
         jDialog.setLayout(new FlowLayout());
         jDialog.setLocationRelativeTo(null);
         jDialog.setVisible(true);
+
         jButton1.addActionListener(judge);
         jButton2.addActionListener(judge);
         jButton3.addActionListener(judge);
