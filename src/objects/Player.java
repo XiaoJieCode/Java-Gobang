@@ -1,6 +1,7 @@
 package objects;
 
-import data.Data;
+
+import data.Game;
 import util.Util;
 
 import javax.swing.*;
@@ -25,17 +26,17 @@ public class Player {
     }
 
     public void surrender() {
-        JOptionPane.showMessageDialog(Data.panel, name + "赢得游戏");
-        Data.gameEnd = 1;
+        JOptionPane.showMessageDialog(new JFrame(), name + "赢得游戏");
+        Game.ifGameEnd = true;
     }
 
     public void ifWin() {
         // 游戏结束不判断
-        if (Data.gameEnd == 0) {
+        if (!Game.ifGameEnd) {
             // 当棋子总数大于等于9时才判断
-            if (Data.chessArray.size() >= 1) {
+            if (Game.chessArray.size() >= 1) {
                 // 初始化变量
-                int[][] chessPositionArray = Util.getChessPositionArray(Data.chessArray);
+                int[][] chessPositionArray = Util.getChessPositionArray(Game.chessArray);
 
                 int positionX = row;
                 int positionY = column;
@@ -155,11 +156,11 @@ public class Player {
     }
 
 
-    public void winOrLose() {
-        if (Data.gameEnd == 0) {
+    public synchronized void winOrLose() {
+        if (!Game.ifGameEnd) {
             if (count >= 4) {
-                JOptionPane.showMessageDialog(Data.frame, this.name + "赢得游戏");
-                Data.gameEnd = 1;
+                JOptionPane.showMessageDialog(new JFrame(), this.name + "赢得游戏");
+                Game.ifGameEnd = true;
             }
         }
         count = 0;

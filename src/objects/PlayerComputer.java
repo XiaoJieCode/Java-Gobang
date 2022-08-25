@@ -1,6 +1,7 @@
 package objects;
 
-import data.Data;
+
+import data.Game;
 import util.Util;
 
 import java.awt.*;
@@ -23,7 +24,7 @@ public class PlayerComputer extends Player {
         // 将棋盘权重数组每个元素初始化为0
         weightArray = new int[15][15];
         // 转换棋子表达方式方便计算
-        chessPositionArray = Util.getChessPositionArray(Data.chessArray);
+        chessPositionArray = Util.getChessPositionArray(Game.chessArray);
         max = -1;
         // 判断棋盘状况
         chessWeightA();
@@ -39,16 +40,15 @@ public class PlayerComputer extends Player {
                 }
             }
         }
-        for (Chess chess : Data.chessArray) {
+        for (Chess chess : Game.chessArray) {
             if (chess.equal(new Chess(row, column, Color.white))) {
                 return;
             }
         }
-        Data.chessArray.add(new Chess(row, column, Color.white));
-        Data.lastChessPositionAIX = row;
-        Data.lastChessPositionAIY = column;
+        Game.chessArray.add(new Chess(row, column, Color.white));
+        Game.lastChessPosComputer = new Point(row, column);
         chessPositionArray[row][column] = -1;
-        Data.gameState = 0;
+        Game.gameState = 0;
         ifWin();
 
     }
@@ -239,7 +239,7 @@ public class PlayerComputer extends Player {
 
             }
         }
-        Data.weightArray = weightArray;
+        Game.weightArray = weightArray;
     }
 
     public int tupleScore(int humanChessmanNum, int machineChessmanNum) {
@@ -290,18 +290,18 @@ public class PlayerComputer extends Player {
 
     @Override
     public void repentanceChess() {
-        if (Data.chessArray.size() > 2) {
-            Data.chessArray.remove(Data.chessArray.size() - 1);
-            Data.gameState = 0;
+        if (Game.chessArray.size() > 2) {
+            Game.chessArray.remove(Game.chessArray.size() - 1);
+            Game.gameState = 0;
         }
     }
 
     @Override
     public void ifWin() {
         // 游戏结束不判断
-        if (Data.gameEnd == 0) {
+        if (!Game.ifGameEnd) {
             // 当棋子总数大于等于9时才判断
-            if (Data.chessArray.size() >= 1) {
+            if (Game.chessArray.size() >= 1) {
                 // 初始化变量
 
 
@@ -421,10 +421,5 @@ public class PlayerComputer extends Player {
                 winOrLose();
             }
         }
-    }
-
-    @Override
-    public void winOrLose() {
-        super.winOrLose();
     }
 }

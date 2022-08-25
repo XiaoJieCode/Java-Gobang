@@ -1,38 +1,36 @@
 package ui;
 
-import data.Data;
+
+import data.Config;
+import data.Game;
+import judge.Judge;
 import modular.Indicator;
-import modular.SaverAndLoader;
 import objects.Chess;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
+
 
 
 public class UI extends JPanel implements ActionListener {
     JFrame frame;
 
     public UI() {
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 UnsupportedLookAndFeelException e) {
-        }
-        initScreen();
+
+        initFrame();
         initMenu();
-        Data.saverAndLoader = new SaverAndLoader();
-        Data.saverAndLoader.loadConfig();
-        Timer timer = new Timer(1 / 120, this);
+
+        Timer timer = new Timer(1 / Config.FPS, this);
         timer.start();
         frame.setVisible(true);
     }
 
     // 初始化各种参数
-    public synchronized void initScreen() {
+    public synchronized void initFrame() {
         frame = new JFrame("五子棋");
+
         frame.setSize(780, 635);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -40,12 +38,10 @@ public class UI extends JPanel implements ActionListener {
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
         frame.add(this, BorderLayout.CENTER);
-
-        Data.frame = frame;
     }
 
     public synchronized void initMenu() {
-        Data.menu = new Menu(frame);
+        new Menu(frame, new Judge(frame));
     }
 
     // 绘制图形
@@ -60,7 +56,7 @@ public class UI extends JPanel implements ActionListener {
     }
 
     // 各种组件绘制方法
-    public void drawBackground(Graphics g) {
+    public void drawBackground(Graphics ignoredG) {
         setBackground(new Color(209, 146, 17));
     }
 
@@ -80,7 +76,7 @@ public class UI extends JPanel implements ActionListener {
     }
 
     public void drawChess(Graphics g) {
-        for (Chess chess : Data.chessArray) {
+        for (Chess chess : Game.chessArray) {
 
             g.setColor(chess.getColor());
             int row = chess.row;
@@ -96,15 +92,13 @@ public class UI extends JPanel implements ActionListener {
     }
 
     public void drawWeightChessGrade(Graphics g) {
-        if (Data.ifShowWeightChess == 1) {
-            int[][] weightArray = new int[15][15];
-            weightArray = Data.weightArray;
+        if (Config.ifShowWeightChess) {
             for (int i = 0; i < 15; i++) {
                 for (int j = 0; j < 15; j++) {
                     g.setColor(Color.green);
                     g.setFont(new Font("黑体", Font.BOLD, 15));
-                    int number = Data.weightArray[j][i];
-                    for (Chess chess : Data.chessArray) {
+                    int number = Game.weightArray[j][i];
+                    for (Chess chess : Game.chessArray) {
                         if (chess.equal(new Chess(j, i, Color.black))) {
                             number = 0;
                         }
@@ -125,6 +119,5 @@ public class UI extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         repaint();
-
     }
 }

@@ -1,6 +1,6 @@
 package objects;
 
-import data.Data;
+import data.Game;
 import util.Util;
 
 import java.awt.*;
@@ -15,29 +15,29 @@ public class PlayerBlack extends Player {
 
     @Override
     public void writeChess() {
-        if (Data.gameEnd == 0) {
+        if (!Game.ifGameEnd) {
             // 当前鼠标坐标
-            int x = Data.mousePointer.x;
-            int y = Data.mousePointer.y;
+            int x = Game.mousePointer.x;
+            int y = Game.mousePointer.y;
             // 转换成棋盘坐标
             row = (Util.round(x)) / 40;
             column = (Util.round(y)) / 40;
 
             // 检查当前位置是否已有棋子
-            for (Chess chess : Data.chessArray) {
+            for (Chess chess : Game.chessArray) {
                 if (chess.equal(new Chess(row, column, Color.black))) {
                     return;
                 }
             }
 
             // 向棋盘数组添加棋子
-            Data.chessArray.add(new Chess(row, column, Color.black));
+            Game.chessArray.add(new Chess(row, column, Color.black));
 
             // 根据当前模式交换下棋方
-            if (Data.pattern == 0) {
-                Data.gameState = 1;
-            } else if (Data.pattern == 1) {
-                Data.gameState = 2;
+            if (Game.pattern == 0) {
+                Game.gameState = 1;
+            } else if (Game.pattern == 1) {
+                Game.gameState = 2;
             }
         }
         ifWin();
@@ -46,12 +46,12 @@ public class PlayerBlack extends Player {
 
     @Override
     public void repentanceChess() {
-        if (Data.chessArray.size() > 2) {
-            Data.chessArray.remove(Data.chessArray.size() - 1);
-            if (Data.pattern == 0) {
-                Data.gameState = 1;
-            } else if (Data.pattern == 1) {
-                Data.gameState = 2;
+        if (Game.chessArray.size() > 2) {
+            Game.chessArray.remove(Game.chessArray.size() - 1);
+            if (Game.pattern == 0) {
+                Game.gameState = 1;
+            } else if (Game.pattern == 1) {
+                Game.gameState = 2;
             }
         }
     }
@@ -59,12 +59,12 @@ public class PlayerBlack extends Player {
     @Override
     public void ifWin() {
         // 游戏结束不判断
-        if (Data.gameEnd == 0) {
+        if (!Game.ifGameEnd) {
             // 当棋子总数大于等于9时才判断
-            if (Data.chessArray.size() >= 1) {
+            if (Game.chessArray.size() >= 1) {
                 // 初始化变量
                 // 利用Util的静态方法把棋子对象转化为一个二维数组，方便进行胜负判断
-                chessPositionArray = Util.getChessPositionArray(Data.chessArray);
+                chessPositionArray = Util.getChessPositionArray(Game.chessArray);
 
                 int positionX = row;
                 int positionY = column;

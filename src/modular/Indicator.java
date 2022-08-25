@@ -1,6 +1,6 @@
 package modular;
 
-import data.Data;
+import data.Game;
 import util.Util;
 
 import java.awt.*;
@@ -34,17 +34,22 @@ public class Indicator {
     }
 
     public static void drawIndicatorAI(Graphics g) {
-        if (Data.pattern == 1 && Data.chessArray.size() > 1) {
-            if (Data.lastChessPositionAIX == -1 && Data.lastChessPositionAIY == -1) {
+        if (Game.pattern == Game.WAR_MACHINE && Game.chessArray.size() > 1) {
+            if (Game.lastChessPosComputer == null) {
                 return;
             }
+
             int x;
             int y;
-            x = Data.chessArray.get(Data.chessArray.size() - 1).row;
-            y = Data.chessArray.get(Data.chessArray.size() - 1).column;
+
+            x = Game.chessArray.get(Game.chessArray.size() - 1).row;
+            y = Game.chessArray.get(Game.chessArray.size() - 1).column;
+
+            Game.lastChessPosComputer = new Point(x, y);
 
             x = x * 40 - 24;
             y = y * 40 - 24;
+
             g.setColor(Color.red);
             g.fillArc(x + 40, y + 40, 8, 8, 0, 360);
 

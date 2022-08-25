@@ -1,6 +1,7 @@
 package util;
 
-import data.Data;
+
+import data.Game;
 import objects.Chess;
 
 import java.awt.*;
@@ -35,14 +36,10 @@ public class Util {
         return a;
     }
 
-    public static void newGame() {
-        Data.chessArray.clear();
-        Data.gameEnd = 0;
-        Data.gameState = 0;
-    }
+
 
     public static Point getPointer() {
-        return Data.mousePointer;
+        return Game.mousePointer;
     }
 
     public static Point getPointerAtChessboard() {
