@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 
 
 public class UI extends JPanel implements ActionListener {
-    JFrame frame;
+    public static JFrame frame;
 
     public UI() {
 

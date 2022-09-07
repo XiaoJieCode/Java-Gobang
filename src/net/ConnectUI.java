@@ -156,12 +156,22 @@ public class ConnectUI extends JPanel {
                 try {
                     if (jRadioButton1.isSelected()){
                         fieldIP.setText("");
+                        if (fieldPort.getText().equals(""))
+                        {
+                            new Server(null, frame);
+                            return;
+                        }
                         int port = Integer.parseInt(fieldPort.getText());
-                        Server server = new Server(port, frame);
+                        new Server(port, frame);
                     } else if (jRadioButton2.isSelected()){
                         String ip = fieldIP.getText();
+                        if (fieldPort.getText().equals(""))
+                        {
+                            new Client(ip, null, frame);
+                            return;
+                        }
                         int port = Integer.parseInt(fieldPort.getText());
-                        Client client = new Client(ip, port, frame);
+                        new Client(ip, port, frame);
                     }
 
                 } catch (NumberFormatException e1) {

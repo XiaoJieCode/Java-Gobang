@@ -6,6 +6,7 @@ import data.Game;
 import modular.LoadGame;
 import modular.SaveGame;
 import net.ConnectUI;
+import net.NetJudge;
 import objects.PlayerBlack;
 import objects.PlayerComputer;
 import objects.PlayerWhite;
@@ -44,7 +45,6 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
         this.playerBlack = new PlayerBlack();
         this.playerWhite = new PlayerWhite();
         this.playerComputer = new PlayerComputer();
-
     }
 
     private void matchPlayChessMode() {
@@ -61,13 +61,7 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
                 playerComputer.writeChess();
             }
         } else if (Game.pattern == Game.NET_WAR) {
-            Thread thread = new Thread(){
-                @Override
-                public void run() {
-
-                }
-            };
-            thread.start();
+            NetJudge.netJudge.writeChess();
         }
     }
 
@@ -97,6 +91,7 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
             case START_NEW_GAME:
                 if (Game.pattern == Game.NET_WAR){
                     try {
+                        frame.setVisible(false);
                         new ConnectUI();
                     } catch (Exception ex) {
                         ex.printStackTrace();

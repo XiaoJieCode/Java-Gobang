@@ -4,27 +4,30 @@ package net;
 import data.Game;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server{
+public class Server {
     Thread acceptThread;
     ServerSocket serverSocket;
     public int port = 7103;
     Socket socket;
     JFrame frame;
+    public static final int TAG = 0;
 
-    public Server(int port, JFrame frame) throws IOException {
+    public Server(Integer port, JFrame frame) throws IOException {
         this.frame = frame;
-        this.port = port;
+
+        if (port != null) {
+            this.port = port;
+        }
         Game.isServer = true;
         initServerSocket();
         createRoom();
 
     }
+
     void createRoom() {
         Thread thread = new Thread() {
             @Override
@@ -49,6 +52,7 @@ public class Server{
             JOptionPane.showMessageDialog(new JFrame(), "玩家加入成功");
         }
         frame.setVisible(false);
+        new NetJudge(socket, TAG);
     }
 
     private void initServerSocket() throws IOException {
@@ -57,9 +61,8 @@ public class Server{
     }
 
 
-
-    public void closeGetSocket(){
-        if (acceptThread != null){
+    public void closeGetSocket() {
+        if (acceptThread != null) {
             acceptThread.interrupt();
         }
     }

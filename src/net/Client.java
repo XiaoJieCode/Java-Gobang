@@ -9,23 +9,26 @@ import java.util.ArrayList;
 
 public class Client {
     Socket socket;
-    ArrayList<Chess> chessArray;
     public int port = 7103;
     public String ip = null;
     JFrame frame;
-    public Client(String ip, int port, JFrame frame) {
+    public static final int TAG = 1;
+    public Client(String ip, Integer port, JFrame frame) {
         this.frame = frame;
         if (ip.equals("")){
             this.ip = "localhost";
         } else {
             this.ip = ip;
         }
-        this.port = port;
+        if (port!=null) {
+            this.port = port;
+        }
         if(joinRoom()){
-            JOptionPane.showMessageDialog(new JFrame(), "加入房间成功");
+            JOptionPane.showMessageDialog(frame, "加入房间成功");
             frame.setVisible(false);
+            new NetJudge(socket, TAG);
         } else {
-            JOptionPane.showMessageDialog(new JFrame(), "加入房间失败");
+            JOptionPane.showMessageDialog(frame, "加入房间失败");
         }
 
     }
@@ -34,22 +37,12 @@ public class Client {
         try {
             socket = new Socket(ip, port);
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(new JFrame(), e.getMessage());
+            JOptionPane.showMessageDialog(frame,"房间不存在");
             return false;
         }
         return true;
     }
 
-    private void sendMsg(String msg){
-        
-    }
 
-    public Socket getSocket() {
-        return socket;
-    }
-
-    public ArrayList<Chess> getChessArray() {
-        return chessArray;
-    }
 
 }
