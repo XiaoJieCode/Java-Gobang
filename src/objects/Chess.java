@@ -26,7 +26,6 @@ public class Chess implements Serializable {
     }
 
     public Color getColor() {
-
         return this.color;
     }
 }

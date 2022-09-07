@@ -1,6 +1,7 @@
 package starter;
 
 import modular.LoadConfig;
+import ui.UI;
 
 import javax.swing.*;
 
@@ -17,6 +18,7 @@ public class GameStart {
 
         // ╪стьеДжцнд╪Ч
         LoadConfig.loadConfig();
+
         new ui.UI();
     }
 }

@@ -44,6 +44,10 @@ public class UI extends JPanel implements ActionListener {
         new Menu(frame, new Judge(frame));
     }
 
+    public JFrame getFrame() {
+        return frame;
+    }
+
     // ªÊ÷∆Õº–Œ
     @Override
     public void paint(Graphics g) {

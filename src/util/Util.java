@@ -22,12 +22,12 @@ public class Util {
     }
 
     public static int round(int a) {
-        int result = 0;
         if (a > 595) {
             return 580;
         } else if (a < 0) {
             return 0;
         }
+
         for (int i = 0; i < 800; i = i + 40) {
             if (i <= a && a <= i + 40) {
                 return i + 20;

@@ -5,6 +5,7 @@ import data.Config;
 import data.Game;
 import modular.LoadGame;
 import modular.SaveGame;
+import net.ConnectUI;
 import objects.PlayerBlack;
 import objects.PlayerComputer;
 import objects.PlayerWhite;
@@ -22,6 +23,7 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
     public static final String ADMIT_DEFEAT = "认输";
     public static final String ALL_WAR = "人人对战";
     public static final String WAR_MACHINE = "人机模式";
+    public static final String NET_WAR = "网络对战";
     public static final String LOAD_LAST_GAME = "加载上局存档";
     public static final String LOAD_SELECT_GAME = "加载指定存档";
     public static final String SAVE_OTHER_PATH = "另存为";
@@ -45,11 +47,63 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
 
     }
 
+    private void matchPlayChessMode() {
+        if (Game.pattern == Game.ALL_WAR) {
+            if (Game.gameState == Game.BLACK) {
+                playerBlack.writeChess();
+            } else {
+                playerWhite.writeChess();
+            }
+
+        } else if (Game.pattern == Game.WAR_MACHINE) {
+            playerBlack.writeChess();
+            if (Game.gameState == Game.COMPUTER && !Game.ifGameEnd) {
+                playerComputer.writeChess();
+            }
+        } else if (Game.pattern == Game.NET_WAR) {
+            Thread thread = new Thread(){
+                @Override
+                public void run() {
+
+                }
+            };
+            thread.start();
+        }
+    }
+
+    private void matchRepentanceMode(){
+        if (Game.pattern == Game.ALL_WAR) {
+            if (Game.gameState == Game.BLACK) {
+                playerBlack.repentanceChess();
+            } else {
+                playerWhite.repentanceChess();
+            }
+        } else if (Game.pattern == Game.WAR_MACHINE) {
+            playerComputer.repentanceChess();
+            playerBlack.repentanceChess();
+            playerComputer.chessPositionArray = Util.getChessPositionArray(Game.chessArray);
+        } else if (Game.pattern == Game.NET_WAR) {
+
+        }
+
+        Game.ifGameEnd = false;
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
         switch (cmd) {
             case START_NEW_GAME:
+                if (Game.pattern == Game.NET_WAR){
+                    try {
+                        new ConnectUI();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+
+                    return;
+                }
                 if (jDialog != null && jDialog.isVisible()) {
                     jDialog.setVisible(false);
                     Game.newGame();
@@ -68,23 +122,10 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
                     }
                     return;
                 }
-
-
                 break;
 
             case REPENTANCE:
-                if (Game.pattern == Game.ALL_WAR) {
-                    if (Game.gameState == Game.BLACK) {
-                        playerBlack.repentanceChess();
-                    } else {
-                        playerWhite.repentanceChess();
-                    }
-                } else if (Game.pattern == Game.WAR_MACHINE) {
-                    playerComputer.repentanceChess();
-                    playerBlack.repentanceChess();
-                    playerComputer.chessPositionArray = Util.getChessPositionArray(Game.chessArray);
-                }
-                Game.ifGameEnd = false;
+                matchRepentanceMode();
                 break;
 
             case ADMIT_DEFEAT:
@@ -101,10 +142,16 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
 
             case ALL_WAR:
                 Game.pattern = Game.ALL_WAR;
+                Config.pattern = Config.ALL_WAR;
                 break;
 
             case WAR_MACHINE:
                 Game.pattern = Game.WAR_MACHINE;
+                Config.pattern = Config.WAR_MACHINE;
+                break;
+            case NET_WAR:
+                Game.pattern = Game.NET_WAR;
+                Config.pattern = Config.NET_WAR;
                 break;
 
             case LOAD_LAST_GAME:
@@ -131,6 +178,7 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
                 break;
 
             case EXIT:
+                modular.SaveConfig.saveConfig();
                 System.exit(1);
                 break;
 
@@ -168,34 +216,12 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
 
             case KeyEvent.VK_SPACE:
             case KeyEvent.VK_ENTER:
-                if (Game.pattern == Game.ALL_WAR) {
-                    if (Game.gameState == Game.BLACK) {
-                        playerBlack.writeChess();
-                    } else {
-                        playerWhite.writeChess();
-                    }
-
-                } else if (Game.pattern == Game.WAR_MACHINE) {
-                    playerBlack.writeChess();
-                    if (Game.gameState == Game.COMPUTER && !Game.ifGameEnd) {
-                        playerComputer.writeChess();
-                    }
-                }
+                matchPlayChessMode();
                 break;
 
             case KeyEvent.VK_ESCAPE:
             case KeyEvent.VK_BACK_SPACE:
-                if (Game.pattern == Game.ALL_WAR) {
-                    if (Game.gameState == Game.BLACK) {
-                        playerBlack.repentanceChess();
-                    } else {
-                        playerWhite.repentanceChess();
-                    }
-                } else if (Game.pattern == Game.WAR_MACHINE) {
-                    playerComputer.repentanceChess();
-                    playerBlack.repentanceChess();
-                    playerComputer.chessPositionArray = Util.getChessPositionArray(Game.chessArray);
-                }
+                matchRepentanceMode();
                 break;
 
             case KeyEvent.VK_F2:
@@ -215,22 +241,11 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
 
     @Override
     public void mousePressed(MouseEvent e) {
-
-
-        if (Game.pattern == 0) {
-            if (Game.gameState == Game.BLACK) {
-                playerBlack.writeChess();
-            } else {
-                playerWhite.writeChess();
-            }
-
-        } else if (Game.pattern == 1) {
-            playerBlack.writeChess();
-            if (Game.gameState == Game.COMPUTER && !Game.ifGameEnd) {
-                playerComputer.writeChess();
-            }
-        }
+        if (Game.mousePointer.x > 620 || Game.mousePointer.y > 600) return;
+        matchPlayChessMode();
     }
+
+
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -261,6 +276,7 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
 
     @Override
     public void windowOpened(WindowEvent e) {
+        if (Config.pattern == Config.NET_WAR) return;
         if (!Config.ifFirstGame) {
             Game.ifGameEnd = true;
             jDialog = new JDialog(frame, "是否加载存档？");
@@ -296,6 +312,7 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
     @Override
     public void windowClosing(WindowEvent e) {
         if (Game.chessArray.size() == 0 || Game.ifGameEnd) {
+            modular.SaveConfig.saveConfig();
             System.exit(1);
         }
         jDialog = new JDialog(frame, "是否保存存档？");
@@ -342,4 +359,5 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
     public void windowDeactivated(WindowEvent e) {
 
     }
+
 }

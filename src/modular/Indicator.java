@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class Indicator {
     public static void drawIndicator(Graphics g) {
+
         drawIndicatorUser(g);
         drawIndicatorAI(g);
     }

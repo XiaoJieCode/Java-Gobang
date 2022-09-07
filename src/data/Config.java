@@ -6,6 +6,7 @@ public class Config {
 
     public static final int ALL_WAR = 0;
     public static final int WAR_MACHINE = 1;
+    public static final int NET_WAR = 2;
 
 
     // 游戏最大帧数
@@ -13,7 +14,6 @@ public class Config {
 
     // 是否显示权值分数
     public static boolean ifShowWeightChess = false;
-
 
     //记录选择的模式
     public static int pattern = WAR_MACHINE;

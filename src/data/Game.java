@@ -13,6 +13,7 @@ public class Game {
     public static final int COMPUTER = 2;
     public static final int ALL_WAR = 0;
     public static final int WAR_MACHINE = 1;
+    public static final int NET_WAR = 2;
 
 
     public static int pattern = Config.pattern;
@@ -35,7 +36,8 @@ public class Game {
     // 游戏鼠标位置
     public static Point mousePointer = new Point(300, 300);
 
-
+    // 当前主机是否是服务器
+    public static boolean isServer = false;
 
 
     public synchronized static void newGame() {

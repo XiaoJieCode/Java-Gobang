@@ -23,7 +23,7 @@ public class LoadConfig {
             config = new Properties();
             config.load(Files.newInputStream(file.toPath()));
             Config.initConfig(config);
-            SaveConfig.saveConfig();
+
 
 
         } catch (Exception e) {
