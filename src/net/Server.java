@@ -15,12 +15,13 @@ public class Server{
     ServerSocket serverSocket;
     public int port = 7103;
     Socket socket;
+    JFrame frame;
 
-    public Server(int port) throws IOException {
+    public Server(int port, JFrame frame) throws IOException {
+        this.frame = frame;
         this.port = port;
         Game.isServer = true;
         initServerSocket();
-
         createRoom();
 
     }
@@ -36,6 +37,7 @@ public class Server{
             }
         };
         thread.start();
+        JOptionPane.showMessageDialog(new JFrame(), "等待玩家加入");
         while (socket == null) {
             try {
                 Thread.sleep(1000);
@@ -46,6 +48,7 @@ public class Server{
         if (socket != null) {
             JOptionPane.showMessageDialog(new JFrame(), "玩家加入成功");
         }
+        frame.setVisible(false);
     }
 
     private void initServerSocket() throws IOException {

@@ -12,8 +12,9 @@ public class Client {
     ArrayList<Chess> chessArray;
     public int port = 7103;
     public String ip = null;
-
-    public Client(String ip, int port) {
+    JFrame frame;
+    public Client(String ip, int port, JFrame frame) {
+        this.frame = frame;
         if (ip.equals("")){
             this.ip = "localhost";
         } else {
@@ -22,6 +23,7 @@ public class Client {
         this.port = port;
         if(joinRoom()){
             JOptionPane.showMessageDialog(new JFrame(), "加入房间成功");
+            frame.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "加入房间失败");
         }

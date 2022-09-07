@@ -84,7 +84,7 @@ public class ConnectUI extends JPanel {
         fieldPort.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-
+                fieldPort.setText("");
             }
 
             @Override
@@ -157,11 +157,11 @@ public class ConnectUI extends JPanel {
                     if (jRadioButton1.isSelected()){
                         fieldIP.setText("");
                         int port = Integer.parseInt(fieldPort.getText());
-                        Server server = new Server(port);
+                        Server server = new Server(port, frame);
                     } else if (jRadioButton2.isSelected()){
                         String ip = fieldIP.getText();
                         int port = Integer.parseInt(fieldPort.getText());
-                        Client client = new Client(ip, port);
+                        Client client = new Client(ip, port, frame);
                     }
 
                 } catch (NumberFormatException e1) {
