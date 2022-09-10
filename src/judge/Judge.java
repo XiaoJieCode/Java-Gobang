@@ -60,8 +60,6 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
             if (Game.gameState == Game.COMPUTER && !Game.ifGameEnd) {
                 playerComputer.writeChess();
             }
-        } else if (Game.pattern == Game.NET_WAR) {
-            NetJudge.netJudge.writeChess();
         }
     }
 
@@ -76,8 +74,6 @@ public class Judge extends KeyAdapter implements java.awt.event.ActionListener, 
             playerComputer.repentanceChess();
             playerBlack.repentanceChess();
             playerComputer.chessPositionArray = Util.getChessPositionArray(Game.chessArray);
-        } else if (Game.pattern == Game.NET_WAR) {
-
         }
 
         Game.ifGameEnd = false;

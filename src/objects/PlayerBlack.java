@@ -1,6 +1,7 @@
 package objects;
 
 import data.Game;
+import net.NetJudge;
 import util.Util;
 
 import java.awt.*;
@@ -31,8 +32,11 @@ public class PlayerBlack extends Player {
             }
 
             // 向棋盘数组添加棋子
-            Game.chessArray.add(new Chess(row, column, Color.black));
-
+            if (!(Game.pattern==Game.NET_WAR)) {
+                Game.chessArray.add(new Chess(row, column, Color.black));
+            }else {
+                NetJudge.netJudge.addChess(row,column,0);
+            }
             // 根据当前模式交换下棋方
             if (Game.pattern == 0) {
                 Game.gameState = 1;
