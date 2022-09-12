@@ -15,7 +15,7 @@ public class Client {
     public static final int TAG = 1;
     public Client(String ip, Integer port, JFrame frame) {
         this.frame = frame;
-        if (ip.equals("")){
+        if (ip.equals("")||ip.equals("«Î ‰»ÎIP")){
             this.ip = "localhost";
         } else {
             this.ip = ip;

@@ -31,7 +31,7 @@ public class Game {
     public static ArrayList<Chess> chessArray = new ArrayList<>();
 
     // 是否以决出胜负
-    public static boolean ifGameEnd = false;
+    public static boolean ifGameEnd = true;
 
     // 游戏鼠标位置
     public static Point mousePointer = new Point(300, 300);

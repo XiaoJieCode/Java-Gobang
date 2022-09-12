@@ -2,6 +2,7 @@ package net;
 
 
 import data.Game;
+import ui.UI;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class Server {
             }
         };
         thread.start();
-        JOptionPane.showMessageDialog(new JFrame(), "等待玩家加入");
+        JOptionPane.showMessageDialog(UI.frame, "等待玩家加入");
         while (socket == null) {
             try {
                 Thread.sleep(1000);
@@ -49,7 +50,7 @@ public class Server {
             }
         }
         if (socket != null) {
-            JOptionPane.showMessageDialog(new JFrame(), "玩家加入成功");
+            JOptionPane.showMessageDialog(UI.frame, "玩家加入成功");
         }
         frame.setVisible(false);
         new NetJudge(socket, TAG);

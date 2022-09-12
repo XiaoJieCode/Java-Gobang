@@ -1,5 +1,7 @@
 package net;
 
+import ui.UI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -24,7 +26,7 @@ public class ConnectUI extends JPanel {
         frame = new JFrame("");
         frame.setSize(300, 500);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
+        frame.setLocationRelativeTo(UI.frame);
         frame.setResizable(false);
         frame.addWindowListener(new WindowListener() {
             @Override
@@ -156,7 +158,7 @@ public class ConnectUI extends JPanel {
                 try {
                     if (jRadioButton1.isSelected()){
                         fieldIP.setText("");
-                        if (fieldPort.getText().equals(""))
+                        if (fieldPort.getText().equals("")||fieldPort.getText().equals("请输入端口号"))
                         {
                             new Server(null, frame);
                             return;
@@ -165,7 +167,7 @@ public class ConnectUI extends JPanel {
                         new Server(port, frame);
                     } else if (jRadioButton2.isSelected()){
                         String ip = fieldIP.getText();
-                        if (fieldPort.getText().equals(""))
+                        if (fieldPort.getText().equals("")||fieldPort.getText().equals("请输入端口号"))
                         {
                             new Client(ip, null, frame);
                             return;
@@ -173,11 +175,10 @@ public class ConnectUI extends JPanel {
                         int port = Integer.parseInt(fieldPort.getText());
                         new Client(ip, port, frame);
                     }
-
                 } catch (NumberFormatException e1) {
-                    JOptionPane.showMessageDialog(new JFrame(), "端口不合法");
+                    JOptionPane.showMessageDialog(UI.frame, "端口不合法");
                 } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(new JFrame(), "该端口已被占用!");
+                    JOptionPane.showMessageDialog(UI.frame, "该端口已被占用!");
                 }
             }
         });

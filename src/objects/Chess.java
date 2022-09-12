@@ -14,6 +14,16 @@ public class Chess implements Serializable {
         this.column = column;
         this.color = color;
     }
+    public Chess(int row, int column, int color) {
+        this.row = row;
+        this.column = column;
+        if (color==0){
+            this.color=Color.black;
+        }else if (color==1){
+            this.color=Color.white;
+        }
+
+    }
 
 
     public boolean equal(Chess obj) {

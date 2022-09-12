@@ -46,8 +46,6 @@ public class PlayerWhite extends Player {
             // 向棋盘数组添加棋子
             if (!(Game.pattern==Game.NET_WAR)) {
                 Game.chessArray.add(new Chess(row, column, color));
-            }else {
-                NetJudge.netJudge.addChess(row,column,1);
             }
             chessPositionArray[row][column] = -1;
 

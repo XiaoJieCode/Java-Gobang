@@ -1,6 +1,8 @@
 package net;
 
+import data.Game;
 import judge.Judge;
+import objects.Chess;
 import objects.Player;
 import objects.PlayerBlack;
 import objects.PlayerWhite;
@@ -12,8 +14,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.HashMap;
 
 public class NetJudge {
     public static final int COMMEND_STOP = -1;
@@ -25,6 +29,7 @@ public class NetJudge {
     public static final int IS_CONNECTED = 5;
     public static final int SET_BLACK_COLOR = 6;
     public static final int SET_WHITE_COLOR = 7;
+    public static final int SET_IF_GAME_END = 8;
 
 
     Socket socket = null;
@@ -34,79 +39,88 @@ public class NetJudge {
     Integer timeOutCount = 10;
     Player player = null;
 
+
     public static NetJudge netJudge = null;
 
     public NetJudge(Socket socket, int TAG) {
 
         netJudge = this;
-        Judge judge = new Judge(UI.frame);
+
 
         this.socket = socket;
         this.tag = TAG;
         getRequest();
-
-
         if (TAG == 0) {
             chooseColor();
-            initPlayer();
             UI.frame.setTitle("五子棋-服务端");
-            if (color == 0) {
-                setClientColor(0);
-            } else {
-                setClientColor(1);
-            }
+
         } else {
             UI.frame.setTitle("五子棋-客户端");
-            setIsConnectedThread();
-            setTimeOutThread();
-            JOptionPane.showMessageDialog(new JFrame(), "等待房主选择棋子颜色");
+            JOptionPane.showMessageDialog(UI.frame, "等待房主选择棋子颜色");
         }
+
+        setIfGameEnd(false);
+
     }
 
-    private void setClientColor(int i) {
+    public void initClient(int color){
         try {
-            OutputStream outputStream = socket.getOutputStream();
-            if (i == 0) {
-                outputStream.write(SET_BLACK_COLOR);
-            } else if (i == 1) {
-                outputStream.write(SET_WHITE_COLOR);
-            }
-
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("color", color);
+            data.put("ifGameEnd", Game.ifGameEnd);
+            data.put("chessArray", Game.chessArray);
+            data.put("showMainUI", true);
+            ObjectOutputStream outputStream = (ObjectOutputStream) socket.getOutputStream();
+            outputStream.writeObject(data);
+            outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void setTimeOutThread() {
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    timeOutCount = timeOutCount + 1;
-
-                    if (timeOutCount == 10) {
-                        JOptionPane.showMessageDialog(new JFrame(), "超时");
-                    }
-                }
-            }
-        };
-        thread.setDaemon(true);
-        thread.start();
-    }
-
-    private void setIsConnectedThread() {
+    private void setIfGameEnd(boolean flag){
+        Game.ifGameEnd = false;
         try {
-            OutputStream stream = socket.getOutputStream();
-            stream.write(IS_CONNECTED);
-        } catch (IOException ignored) {
-
+            OutputStream outputStream = socket.getOutputStream();
+            outputStream.write(new byte[]{SET_IF_GAME_END, (byte) (flag?1:0)});
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
+
+//    private void setTimeOutThread() {
+//        Thread thread = new Thread() {
+//            @Override
+//            public void run() {
+//                while (true) {
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    timeOutCount = timeOutCount + 1;
+//
+//                    if (timeOutCount == 10) {
+//                        JOptionPane.showMessageDialog(UI.frame, "超时");
+//                    }
+//                }
+//            }
+//        };
+//        thread.setDaemon(true);
+//        thread.start();
+//    }
+//
+//    private void setIsConnectedThread() {
+//        try {
+//            OutputStream stream = socket.getOutputStream();
+//            stream.write(new byte[]{IS_CONNECTED});
+//            stream.close();
+//        } catch (IOException ignored) {
+//
+//        }
+//    }
 
     private void reConnect() {
 
@@ -125,7 +139,7 @@ public class NetJudge {
                             try {
                                 commends = stream.readAllBytes();
                                 commend = commends[0];
-                            } catch (IOException ignored) {
+                            } catch (IOException | ArrayIndexOutOfBoundsException ignored) {
                             }
                             switch (commend) {
                                 case COMMEND_STOP:
@@ -139,17 +153,14 @@ public class NetJudge {
                                     int row = commends[1];
                                     int column = commends[2];
                                     int color = commends[3];
-                                    writeChess(row,column,color);
-                                    break;
-                                case SET_BLACK_COLOR:
-                                    initPlayer(0);
-                                    break;
-                                case SET_WHITE_COLOR:
-                                    initPlayer(1);
+                                    writeChess(row, column, color);
                                     break;
                                 case IS_CONNECTED:
                                     timeOutCount = 0;
                                     break;
+
+                                case SET_IF_GAME_END:
+                                    Game.ifGameEnd= commends[1] != 0;
                                 case -2:
                                     break;
                             }
@@ -185,7 +196,6 @@ public class NetJudge {
         }
     }
 
-
     private synchronized void chooseColor() {
         JFrame frame = new JFrame("请选择你的棋子颜色");
         frame.setLayout(new FlowLayout());
@@ -202,9 +212,10 @@ public class NetJudge {
                 } else if (e.getActionCommand().equals("白色")) {
                     color = 1;
                 }
+                initPlayer();
                 frame.setVisible(false);
                 UI.frame.setVisible(true);
-                showClientUI();
+                initClient(color==0?1:0);
             }
         }
         Listener listener = new Listener();
@@ -215,34 +226,21 @@ public class NetJudge {
         frame.setVisible(true);
     }
 
-
-    public void writeChess(int row, int column,int color) {
-        if (tag == 0) {
-            writeChessForServer(row,column,color);
-        } else {
-            writeChessForClient(row,column,color);
-        }
-    }
-
-    private void showClientUI() {
-        try {
-            OutputStream outputStream = socket.getOutputStream();
-            outputStream.write(SHOW_MAIN_UI);
-            outputStream.close();
-
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(new JFrame(), "弹出客户端UI错误");
-        }
-    }
-
-    private void writeChessForServer(int row, int column,int color ) {
-        player.writeChess();
-    }
-
-    private void writeChessForClient(int row, int column,int color) {
-
+    private void writeChess(int row, int column, int color) {
     }
 
     public void addChess(int row, int column, int color) {
+        if (tag == 1) {
+            try {
+                OutputStream outputStream = socket.getOutputStream();
+                outputStream.write(new byte[]{WRITE_CHESS, (byte) row, (byte) column, (byte) color});
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else if (tag==0){
+            Game.chessArray.add(new Chess(row, column, color));
+        }
     }
 }
